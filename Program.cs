@@ -89,11 +89,10 @@ app.MapPost("/upload", async Task<IResult>(HttpRequest request) =>
             .Distinct()
             .StringJoin(", "), true),
         ("Text8", "Bittere", data.Ibu.ToString("N0") + " IBU", true),
-        ("Text9", "Farbe", data.Color.ToString("N0") + " EBC", true),
+        ("Text9", "Farbe", (data.Color * 1.97).ToString("N0") + " EBC", true),
         ("Text10", "Autor", data.Author!, true),
         ("Text11", "Abfülldatum", DateTime.Now.ToString("dd.MM.yyyy"), true),
         ("type", "LabelTyp", "Label_23", false),
-        ("colorSchema", "Farbschema", "cs1", false),
         ("labelsRow", "Label pro Zeile", "1", false),
         ("labelsPage", "Zeilen pro Seite", "13", false)
     };
@@ -114,6 +113,16 @@ app.MapPost("/upload", async Task<IResult>(HttpRequest request) =>
 <h1>Daten prüfen</h1>
 <form action=""https://braureka.de/rezepte/label-print"" method=""POST"">
 {fields}
+    <p>
+        <label for=""colorSchema"">Farbe:</label>
+        <select id=""colorSchema"" name=""colorSchema"">
+            <option value=""cs1"">weiß</option>
+            <option value=""cs2"">gold</option>
+            <option value=""cs3"">bernstein</option>
+            <option value=""cs4"">braun</option>
+            <option value=""cs5"">schwarz</option>
+        </select>
+    </p>
     <p>
         <input type=""submit"" value=""Ab dafür!"" />
     </p>
